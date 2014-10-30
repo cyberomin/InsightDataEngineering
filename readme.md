@@ -10,4 +10,5 @@ The CSV is named solution.csv
 ```shell
 $ python sudoku.py puzzle.csv
 ``` 
+The soulution.csv is typically stored in the project root.
 
