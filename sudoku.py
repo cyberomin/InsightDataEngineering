@@ -10,10 +10,10 @@ class Sudoku:
         self.file = file
 
 
-    def parse_csv(self):
+    def parse_csv(self, csv_file):
         """Parse CSV gotten from the constructor and generate a string of numbers."""
         parsed_result = ""
-        with open(self.file, 'r') as f:
+        with open(csv_file, 'r') as f:
             lines = csv.reader(f)
             data = [numbers for line in lines for numbers in line]
         for x in data:
@@ -24,17 +24,18 @@ class Sudoku:
         """Writes the result of the puzzle in a CSV file."""
         data = []
         x = 0
+        solved_file = "solution.csv"
         result = str(result)
         total = len(result) // 9
         for i in range(total):
             data.append(list(result[x:x + 9]))
             x += 9
 
-        with open('solution.csv', 'w') as fp:
+        with open(solved_file, 'w') as fp:
             a = csv.writer(fp, delimiter=',')
             a.writerows(data)
 
-        return "Done"
+        return solved_file
 
 
     def same_row(self, i, j):
@@ -54,21 +55,22 @@ class Sudoku:
         if i == -1:
             self.solved_csv(puzzle)
             sys.exit(puzzle)
-        else:
-            excluded_numbers = set()
-            for j in range(81):
-                if self.same_row(i, j) or self.same_col(i, j) or self.same_block(i, j):
-                    excluded_numbers.add(puzzle[j])
+        excluded_numbers = set()
+        for j in range(81):
+            if self.same_row(i, j) or self.same_col(i, j) or self.same_block(i, j):
+                excluded_numbers.add(puzzle[j])
 
-            for m in string.digits[1:]:
-                if m not in excluded_numbers:
-                    self.solve(puzzle[:i] + m + puzzle[i+1:])
-            return puzzle
+        for m in string.digits[1:]:
+            if m not in excluded_numbers:
+                self.solve(puzzle[:i] + m + puzzle[i+1:])
+
+
+
 
 if __name__ == '__main__':
     if len(sys.argv) == 2 and sys.argv[1].endswith(".csv"):
         sudoku = Sudoku(sys.argv[1])
-        puzzle = sudoku.parse_csv()
+        puzzle = sudoku.parse_csv(sudoku.file)
         sudoku.solve(puzzle)
         print "Solved. The result is in solution.csv"
     else:
