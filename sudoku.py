@@ -6,37 +6,31 @@ import csv
 
 class Sudoku:
 
-    def __init__(self, file):
+    def __init__(self):
         """Initialize the puzzle to solve"""
-        self.file = file
+        pass
 
     def parse_csv(self, csv_file):
         """Parse CSV gotten from the constructor and generates
         a string of numbers."""
-        parsed_result = ""
         with open(csv_file, 'r') as f:
             lines = csv.reader(f)
             data = [numbers for line in lines for numbers in line]
-        for x in data:
-            parsed_result += x
+
+        parsed_result = "".join(data)
         return parsed_result
 
     def solved_csv(self, result):
         """Writes the result of the puzzle in a CSV file."""
         data = []
-        x = 0
         solved_file = "solution.csv"
         result = str(result)
-        total = len(result) // 9
-        for i in range(total):
-            data.append(list(result[x:x + 9]))
-            x += 9
+        for i in range(0, len(result), 9):
+            data.append(list(result[i:i + 9]))
 
         with open(solved_file, 'w') as fp:
             a = csv.writer(fp, delimiter=',')
             a.writerows(data)
-
-        return solved_file
 
     def same_row(self, i, j):
         """Checks to see if the rows are the same"""
@@ -60,7 +54,7 @@ class Sudoku:
             if self.same_row(i, j) \
                     or self.same_col(i, j) \
                     or self.same_block(i, j):
-                excluded_numbers.add(puzzle[j])
+                excluded_numbers.add(puzzle[j]) # excluding the number zero from the list of possible numbers
 
         for m in string.digits[1:]:
             if m not in excluded_numbers:
@@ -68,8 +62,8 @@ class Sudoku:
 
 if __name__ == '__main__':
     if len(sys.argv) == 2 and sys.argv[1].endswith(".csv"):
-        sudoku = Sudoku(sys.argv[1])
-        puzzle = sudoku.parse_csv(sudoku.file)
+        sudoku = Sudoku()
+        puzzle = sudoku.parse_csv(sys.argv[1])
         sudoku.solve(puzzle)
         print "Solved. The result is in solution.csv"
     else:
