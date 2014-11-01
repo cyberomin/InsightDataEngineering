@@ -121,7 +121,7 @@ if __name__ == "__main__":
 
     if len(sys.argv) == 2 and sys.argv[1].endswith(".csv"):
         sudoku = Sudoku()
-        sudoku_num = sudoku.parse_csv("puzzle.csv")
+        sudoku_num = sudoku.parse_csv(sys.argv[1])
         matrix = sudoku.group(sudoku_num, 9)
         answer = sudoku.solve(matrix)
         sudoku.write_to_csv(answer)
