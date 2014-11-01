@@ -25,6 +25,7 @@ class Sudoku(object):
             data = [numbers for line in lines for numbers in line]
 
         parsed_result = "".join(data)
+        assert len(parsed_result) == 81
         return parsed_result
 
     @staticmethod
