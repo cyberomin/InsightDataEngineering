@@ -3,15 +3,16 @@ import sys
 import string
 import csv
 
+
 class Sudoku:
 
     def __init__(self, file):
         """Initialize the puzzle to solve"""
         self.file = file
 
-
     def parse_csv(self, csv_file):
-        """Parse CSV gotten from the constructor and generate a string of numbers."""
+        """Parse CSV gotten from the constructor and generates
+        a string of numbers."""
         parsed_result = ""
         with open(csv_file, 'r') as f:
             lines = csv.reader(f)
@@ -37,7 +38,6 @@ class Sudoku:
 
         return solved_file
 
-
     def same_row(self, i, j):
         """Checks to see if the rows are the same"""
         return i/9 == j/9
@@ -57,15 +57,14 @@ class Sudoku:
             sys.exit(puzzle)
         excluded_numbers = set()
         for j in range(81):
-            if self.same_row(i, j) or self.same_col(i, j) or self.same_block(i, j):
+            if self.same_row(i, j) \
+                    or self.same_col(i, j) \
+                    or self.same_block(i, j):
                 excluded_numbers.add(puzzle[j])
 
         for m in string.digits[1:]:
             if m not in excluded_numbers:
                 self.solve(puzzle[:i] + m + puzzle[i+1:])
-
-
-
 
 if __name__ == '__main__':
     if len(sys.argv) == 2 and sys.argv[1].endswith(".csv"):
@@ -75,6 +74,5 @@ if __name__ == '__main__':
         print "Solved. The result is in solution.csv"
     else:
         print 'Usage: python sudoku.py puzzle.csv'
-        print 'The puzzle.csv is a 9 x 9 file where 0 represents unsolved location or blanks.'
-
-
+        print 'The puzzle.csv is a 9 x 9 file where 0 represents ' \
+              'unsolved location or blanks.'
