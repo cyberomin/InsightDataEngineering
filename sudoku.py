@@ -33,7 +33,7 @@ class Sudoku(object):
                     sys.exit('file %s, line %d: %s' %
                              (csv_file, csv_reader.line_num, error))
         except IOError:
-            sys.exit("File does not exist.")
+            sys.exit("File does not exist")
 
         parsed_result = "".join(data)
         if len(parsed_result) != self.cols * self.rows:
