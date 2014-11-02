@@ -83,9 +83,9 @@ class Sudoku(object):
         7 8 9
         """
         row, cow = pos
-        br0 = 3 * (row // 3)
-        bc0 = 3 * (cow // 3)
-        return [grid[br0 + r][bc0 + c] for r in range(3) for c in range(3)]
+        peer_row = 3 * (row // 3)
+        peer_col = 3 * (cow // 3)
+        return [grid[peer_row + r][peer_col + c] for r in range(3) for c in range(3)]
 
     def find_possible_values(self, grid, pos):
         """Find a possible value for the unsolved location"""
