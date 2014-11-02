@@ -2,10 +2,10 @@
 ###### Sudoku puzzle Solver
 
 This is a solution to the Insight Data Engineering Challenge. It is a sudoku puzzle solver implemented in Python.
-It is requires Python 2.7 to run efficiently.
+It requires at least Python 2.7 to run efficiently.
 
-It can be ran from a unix terminal. It accepts a CSV file for the puzzle as an input and it outputs a CSV too for its solution.
-The CSV is named solution.csv
+This solution is programmed to run from a unix terminal. It accepts a CSV file for the puzzle as an input and it outputs 
+a CSV too for its solution. The CSV is named solution.csv
 
 ```shell
 $ python sudoku.py puzzle3.csv pattern=6 #Use this if input file is a 6 x 6 puzzle
