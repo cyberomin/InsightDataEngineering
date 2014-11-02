@@ -8,7 +8,10 @@ It can be ran from a unix terminal. It accepts a CSV file for the puzzle as an i
 The CSV is named solution.csv
 
 ```shell
-$ python sudoku.py puzzle.csv
+$ python sudoku.py puzzle2.csv pattern=4 #Use this if input file is a 4 x 4 puzzle
+$ python sudoku.py puzzle.csv pattern=9 #Use this if input file is a 9 x 9 puzzle
+$ python sudoku.py puzzle.csv #Use this if input file is a 9 x 9 puzzle
 ``` 
+The pattern parameter is optional. Running the code without this will assume the puzzle is a 9 x 9 matrix.
 The soulution.csv is typically stored in the project root.
 
