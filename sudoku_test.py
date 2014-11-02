@@ -46,11 +46,11 @@ class SudokuTest(unittest.TestCase):
 
     def test_puzzle_elements_at_row_position_are_valid(self):
         row_elements = self.sudoku.get_row(self.matrix, self.location)
-        self.assertEquals(row_elements, [0,3,5,2,9,0,8,6,4])
+        self.assertEquals(row_elements, [0, 3, 5, 2, 9, 0, 8, 6, 4])
 
     def test_puzzle_elements_at_col_position_are_valid(self):
         col_elements = self.sudoku.get_col(self.matrix, self.location)
-        self.assertEquals(col_elements, [0,0,7,2,0,0,4,3,8])
+        self.assertEquals(col_elements, [0, 0, 7, 2, 0, 0, 4, 3, 8])
 
     def test_puzzle_elements_at_block_position_are_valid(self):
         block_elements = self.sudoku.get_block(self.matrix, self.location)
@@ -65,7 +65,9 @@ class SudokuTest(unittest.TestCase):
         self.assertEquals(pos, (0, 0))
 
     def test_possible_value_is_correct(self):
-        value = list(self.sudoku.find_possible_values(self.matrix, self.location))
+        value = list(
+            self.sudoku.find_possible_values(self.matrix, self.location)
+        )
         self.assertEquals(value[0], 1)
 
     def test_value_is_legal(self):
