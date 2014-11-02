@@ -60,6 +60,10 @@ class SudokuTest(unittest.TestCase):
         pos = self.sudoku.find_unsolved_location(self.matrix)
         self.assertIsInstance(pos, tuple)
 
+    def test_unassinged_location(self):
+        pos = self.sudoku.find_unsolved_location(self.matrix)
+        self.assertEquals(pos, (0, 0))
+
     def test_possible_value_is_correct(self):
         value = list(self.sudoku.find_possible_values(self.matrix, self.location))
         self.assertEquals(value[0], 1)
