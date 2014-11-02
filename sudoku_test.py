@@ -10,13 +10,6 @@ class SudokuTest(unittest.TestCase):
         self.sudoku_puzzle = self.sudoku.parse_csv("puzzle.csv")
         self.matrix = self.sudoku.group(self.sudoku_puzzle, 9)
         self.location = (0, 0)
-    """
-    def tearDown(self):
-        dir = os.curdir
-        file_sys = os.listdir(dir)
-        filename = [f for f in file_sys if f == "solution.csv"]
-        if len(filename) >= 1: os.remove(filename[0])
-    """
 
     def test_puzzle_has_eighty_one_items(self):
         self.assertEquals(len(self.sudoku_puzzle), 81)
