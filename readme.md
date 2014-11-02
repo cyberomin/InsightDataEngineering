@@ -8,6 +8,7 @@ It can be ran from a unix terminal. It accepts a CSV file for the puzzle as an i
 The CSV is named solution.csv
 
 ```shell
+$ python sudoku.py puzzle3.csv pattern=6 #Use this if input file is a 6 x 6 puzzle
 $ python sudoku.py puzzle2.csv pattern=4 #Use this if input file is a 4 x 4 puzzle
 $ python sudoku.py puzzle.csv pattern=9 #Use this if input file is a 9 x 9 puzzle
 $ python sudoku.py puzzle.csv #Use this if input file is a 9 x 9 puzzle

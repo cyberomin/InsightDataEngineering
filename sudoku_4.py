@@ -8,20 +8,16 @@ from __future__ import division
 import csv
 from math import sqrt
 
-
 class Sudoku(object):
     """A sudoku solver that uses a recursive strategy"""
 
-    def __init__(self, pattern=None):
+    def __init__(self):
         """Initialize the puzzle to solve"""
-        if pattern:
-            self.rows = pattern
-            self.cols = pattern
-        else:
-            self.rows = 9
-            self.cols = 9
+        self.rows = 6
+        self.cols = 6
 
-    def parse_csv(self, csv_file):
+    @staticmethod
+    def parse_csv(csv_file):
         """Parse CSV gotten from the constructor and generates
         a string of numbers."""
         try:
@@ -36,8 +32,7 @@ class Sudoku(object):
             sys.exit("File does not exist.")
 
         parsed_result = "".join(data)
-        if len(parsed_result) != self.cols * self.rows:
-            sys.exit("Wrong type parameter entered and or wrong puzzle file. ")
+        assert len(parsed_result) == 36
         return parsed_result
 
     @staticmethod
@@ -90,6 +85,7 @@ class Sudoku(object):
         row, col = pos
         return [grid[row][col] for row in range(self.rows)]
 
+
     def get_block(self, grid, pos):
         """Get the block for the current position
         1 2 3
@@ -137,31 +133,10 @@ class Sudoku(object):
 if __name__ == "__main__":
     import sys
 
-    if len(sys.argv) == 2 and sys.argv[1].endswith(".csv"):
-        sudoku = Sudoku()
-        sudoku_num = sudoku.parse_csv(sys.argv[1])
-        matrix = sudoku.group(sudoku_num, 9)
-        answer = sudoku.solve(matrix)
-        sudoku.write_to_csv(answer)
-        print "Solved. The result is in solution.csv"
 
-    elif len(sys.argv) == 3 \
-            and sys.argv[1].endswith(".csv") \
-            and sys.argv[2].startswith("pattern="):
-        num_format = sys.argv[2].split("=")[1]
-        num_format = int(num_format)
-        acceptable = (4, 6, 9)
-        if num_format in acceptable:
-            sudoku = Sudoku(num_format)
-            sudoku_num = sudoku.parse_csv(sys.argv[1])
-            matrix = sudoku.group(sudoku_num, num_format)
-            answer = sudoku.solve(matrix)
-            sudoku.write_to_csv(answer)
-            print "Solved. The result is in solution.csv"
-        else:
-            print "Invalid type entered", num_format
-
-    else:
-        print 'Usage: python sudoku.py puzzle.csv'
-        print 'The puzzle.csv should be a 9 x 9 or 4 * 4 file ' \
-              'where 0 represents unsolved location or blanks.'
+    sudoku = Sudoku()
+    sudoku_num = "300004004300030060040010002100100002"
+    matrix = sudoku.group(sudoku_num, 6)
+    answer = sudoku.solve(matrix)
+    for x in answer:
+        print sorted(x)
