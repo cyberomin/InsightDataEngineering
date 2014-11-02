@@ -38,10 +38,13 @@ class Sudoku(object):
     @staticmethod
     def write_to_csv(result):
         """Writes the result of the puzzle in a CSV file."""
-        solved_file = "solution.csv"
-        with open(solved_file, 'w') as file_to_process:
-            writer = csv.writer(file_to_process, delimiter=',')
-            writer.writerows(result)
+        if isinstance(result, list):
+            solved_file = "solution.csv"
+            with open(solved_file, 'w') as file_to_process:
+                writer = csv.writer(file_to_process, delimiter=',')
+                writer.writerows(result)
+        else:
+            raise Exception("Please supply a list")
 
     @staticmethod
     def group(puzzle, num):
