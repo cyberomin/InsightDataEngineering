@@ -8,13 +8,14 @@ class SudokuTest(unittest.TestCase):
     def setUp(self):
         self.sudoku = Sudoku()
         self.sudoku_puzzle = self.sudoku.parse_csv("puzzle.csv")
+        self.matrix = self.sudoku.group(self.sudoku_puzzle, 9)
+        self.location = (0, 0)
 
     def test_puzzle_has_eighty_one_items(self):
         self.assertEquals(len(self.sudoku_puzzle), 81)
 
     def test_solve_puzzle(self):
-        matrix = self.sudoku.group(self.sudoku_puzzle, 9)
-        answer = self.sudoku.solve(matrix)
+        answer = self.sudoku.solve(self.matrix)
         self.sudoku.write_to_csv(answer)
         dir = os.curdir
         file_sys = os.listdir(dir)
@@ -34,33 +35,37 @@ class SudokuTest(unittest.TestCase):
         puzzle_file = "solution.csv"
         self.assertTrue(puzzle_file.endswith("csv"))
 
-    def test_elements_at_a_position(self):
-        matrix = self.sudoku.group(self.sudoku_puzzle, 9)
-        location = (0, 0)
-
-        col_elements = self.sudoku.get_col(matrix, location)
-        row_elements = self.sudoku.get_row(matrix, location)
-        block_elements = self.sudoku.get_block(matrix, location)
+    def test_puzzle_elements_at_a_position(self):
+        col_elements = self.sudoku.get_col(self.matrix, self.location)
+        row_elements = self.sudoku.get_row(self.matrix, self.location)
+        block_elements = self.sudoku.get_block(self.matrix, self.location)
 
         self.assertEquals(len(col_elements), 9)
         self.assertEquals(len(row_elements), 9)
         self.assertEquals(len(block_elements), 9)
 
-    def test_input_file_is_not_already_solved(self):
-        matrix = self.sudoku.group(self.sudoku_puzzle, 9)
-        pos = self.sudoku.find_unsolved_location(matrix)
+    def test_puzzle_elements_at_row_position_are_valid(self):
+        row_elements = self.sudoku.get_row(self.matrix, self.location)
+        self.assertEquals(row_elements, [0,3,5,2,9,0,8,6,4])
+
+    def test_puzzle_elements_at_col_position_are_valid(self):
+        col_elements = self.sudoku.get_col(self.matrix, self.location)
+        self.assertEquals(col_elements, [0,0,7,2,0,0,4,3,8])
+
+    def test_puzzle_elements_at_block_position_are_valid(self):
+        block_elements = self.sudoku.get_block(self.matrix, self.location)
+        self.assertEquals(block_elements, [0, 3, 5, 0, 8, 2, 7, 6, 4])
+
+    def test_puzzle_file_is_not_already_solved(self):
+        pos = self.sudoku.find_unsolved_location(self.matrix)
         self.assertIsInstance(pos, tuple)
 
     def test_possible_value_is_correct(self):
-        matrix = self.sudoku.group(self.sudoku_puzzle, 9)
-        pos = (0, 0)
-        value = list(self.sudoku.find_possible_values(matrix, pos))
+        value = list(self.sudoku.find_possible_values(self.matrix, self.location))
         self.assertEquals(value[0], 1)
 
     def test_value_is_legal(self):
-        matrix = self.sudoku.group(self.sudoku_puzzle, 9)
-        pos = (0, 0)
-        self.assertTrue(self.sudoku.is_legal(1, matrix, pos))
+        self.assertTrue(self.sudoku.is_legal(1, self.matrix, self.location))
 
 
 def main():
