@@ -163,5 +163,5 @@ if __name__ == "__main__":
 
     else:
         print 'Usage: python sudoku.py puzzle.csv'
-        print 'The puzzle.csv should be a 9 x 9 or 4 * 4 file ' \
+        print 'The puzzle.csv should be a 9 x 9, 4 * 4 or a 6 x6 file ' \
               'where 0 represents unsolved location or blanks.'
