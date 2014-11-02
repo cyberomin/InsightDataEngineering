@@ -20,9 +20,16 @@ class Sudoku(object):
     def parse_csv(csv_file):
         """Parse CSV gotten from the constructor and generates
         a string of numbers."""
-        with open(csv_file, 'r') as file_to_read:
-            lines = csv.reader(file_to_read)
-            data = [numbers for line in lines for numbers in line]
+        try:
+            with open(csv_file, 'r') as file_to_read:
+                csv_reader = csv.reader(file_to_read)
+                try:
+                    data = [numbers for line in csv_reader for numbers in line]
+                except csv.Error as error:
+                    sys.exit('file %s, line %d: %s' %
+                             (csv_file, csv_reader.line_num, error))
+        except IOError:
+            sys.exit("File does not exist.")
 
         parsed_result = "".join(data)
         assert len(parsed_result) == 81
@@ -85,7 +92,8 @@ class Sudoku(object):
         row, cow = pos
         peer_row = 3 * (row // 3)
         peer_col = 3 * (cow // 3)
-        return [grid[peer_row + r][peer_col + c] for r in range(3) for c in range(3)]
+        return [grid[peer_row + r][peer_col + c] for r in range(3)
+                for c in range(3)]
 
     def find_possible_values(self, grid, pos):
         """Find a possible value for the unsolved location"""
